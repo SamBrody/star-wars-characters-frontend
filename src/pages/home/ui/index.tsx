@@ -7,9 +7,9 @@ export const HomePage = () => {
     const handleClick = (routeName: string) => navigate({to: routeName})
 
     return(
-        <Container style={{marginTop: 10}} className="homeContainer">
+        <Container style={{height: '100vh'}} className="homeContainer">
             <Row>
-                <Stack direction="horizontal" gap={2}>
+                <Stack direction="horizontal" gap={2} style={{marginTop: 10}}>
                     <Button variant="secondary" size="lg" onClick={() => handleClick('/characters')}>Каталог</Button>
                     <Button variant="secondary" size="lg" onClick={() => handleClick('/characters/new')}>Добавить пресонажа</Button>
                 </Stack>
