@@ -14,7 +14,7 @@ export const HomePage = () => {
                     <Button variant="secondary" size="lg" onClick={() => handleClick('/characters/new')}>Добавить пресонажа</Button>
                 </Stack>
             </Row>
-            <Row>
+            <Row style={{marginTop: 40}}>
                 <Outlet/>
             </Row>
         </Container>
