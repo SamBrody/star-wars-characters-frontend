@@ -5,7 +5,7 @@ const labelStyle = {minWidth: 70}
 
 export const CharacterFilters = () => {
     return(
-        <Container style={{marginBottom: 30}}>
+        <Container>
             <Row>
                 <Col>
                     <Stack direction="horizontal" gap={2} style={{marginBottom: 15}}>

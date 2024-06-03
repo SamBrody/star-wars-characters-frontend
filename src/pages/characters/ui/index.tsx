@@ -3,13 +3,15 @@ import {Characters} from "./characters.tsx";
 import {CharacterFilters} from "./character-filters.tsx";
 
 export const CharactersPage = () => {
+
+
     return(
         <Container fluid>
             <Row>
                 <h1>Каталог персонажей StarWars</h1>
             </Row>
             <hr/>
-            <Row style={{marginTop: 30}}>
+            <Row style={{marginTop: 30, marginBottom: 30}}>
                 <CharacterFilters/>
             </Row>
             <hr/>
