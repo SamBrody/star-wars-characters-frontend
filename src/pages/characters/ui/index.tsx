@@ -3,11 +3,22 @@ import {Characters} from "./characters.tsx";
 import {CharacterFilters} from "./character-filters.tsx";
 import {GetCharactersRequest, useGetCharacters} from "../../../entities/character/api/get-characters.ts";
 import {ReactNode, useState} from "react";
+import {FormProvider, useForm} from "react-hook-form";
 
 const PAGE = 1;
 const PER_PAGE = 4;
 
+type DefaultFilterFormValues = {
+    yearFrom?: number,
+    toFrom?: number,
+    planetId?: number,
+    speciesId?: number,
+    moviesIds?: number[],
+}
+
 export const CharactersPage = () => {
+    const filtersForm = useForm<DefaultFilterFormValues>();
+    
     const [page, setPage] = useState(PAGE);
     const req: GetCharactersRequest = {
         page: page,
@@ -45,7 +56,9 @@ export const CharactersPage = () => {
             </Row>
             <hr/>
             <Row style={{marginTop: 30, marginBottom: 30}}>
-                <CharacterFilters/>
+                <FormProvider {...filtersForm}>
+                    <CharacterFilters/>
+                </FormProvider>
             </Row>
             <hr/>
             <Row style={{marginTop: 30, marginBottom: 30}}>
