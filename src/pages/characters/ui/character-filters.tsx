@@ -1,7 +1,7 @@
 import {Col, Container, Form, Row, Stack} from "react-bootstrap";
-import {useGetMovies} from "../../../entities/movie/api/get-movies.ts";
-import {useGetPlanets} from "../../../entities/planet/api/get-planets.ts";
 import {CharacterGender} from "../../../entities/character";
+import {useGetMovies} from "../../../entities/movie";
+import {useGetPlanets} from "../../../entities/planet";
 
 const yearInputStyle = {width: '100%'}
 const labelStyle = {minWidth: 70}

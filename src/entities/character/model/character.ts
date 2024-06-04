@@ -1,6 +1,6 @@
-import {Planet} from "../../planet/model/planet.ts";
-import {Species} from "../../species/model/species.ts";
 import {Movie} from "../../movie";
+import {Planet} from "../../planet";
+import {Species} from "../../species";
 
 export type Character = {
     id: number,
