@@ -63,7 +63,7 @@ export const CharactersPage = () => {
                 </FormProvider>
             </Row>
             <hr/>
-            <Row style={{marginTop: 30, marginBottom: 30}}>
+            <Row style={{marginTop: 30, marginBottom: 30, minHeight: 190}}>
                 {loadingOrFetching && <Placeholder animation="glow" xs={12} size="lg" />}
                 {isSuccess && !(isLoading || isFetching) && <Characters characters={data.items}/>}
                 {isError && <h3>Возникла ошибка! {error.message}</h3>}
