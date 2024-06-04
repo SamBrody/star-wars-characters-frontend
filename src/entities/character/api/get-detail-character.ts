@@ -1,6 +1,6 @@
 import {Character} from "../model/character.ts";
-import {axiosClient} from "../../../shared/api/base.ts";
 import {useQuery} from "@tanstack/react-query";
+import {axiosClient} from "../../../shared";
 
 const getDetailCharacter = async(characterId: number): Promise<Character> => {
     if (!characterId) return Promise.reject();

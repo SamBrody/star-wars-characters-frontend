@@ -1,7 +1,7 @@
 import {Button, Modal} from "react-bootstrap";
-import {useDeleteCharacter} from "../api/delete-character.ts";
 import {useSnackbar} from "notistack";
 import {useEffect} from "react";
+import {useDeleteCharacter} from "../api/use-delete-character.ts";
 
 type Props = {
     characterId: number,

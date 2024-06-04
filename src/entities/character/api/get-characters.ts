@@ -1,6 +1,6 @@
-import {axiosClient} from "../../../shared/api/base.ts";
 import {keepPreviousData, useQuery} from "@tanstack/react-query";
 import {CharacterWithPagination} from "../model/character-with-pagination.ts";
+import {axiosClient} from "../../../shared";
 
 export type GetCharactersRequest = {
     page: number,

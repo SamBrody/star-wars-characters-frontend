@@ -1,23 +1,9 @@
-import {BirthDayEra, Character, CharacterGender} from "../model/character.ts";
+import {Character} from "../model/character.ts";
 import {Button, Col, Container, Row, Stack} from "react-bootstrap";
 import {useNavigate} from "@tanstack/react-router";
-import {CharacterDeleteModal} from "./character-delete-modal.tsx";
 import {useState} from "react";
-
-const parseGender = (genderNum: number) => {
-    const gender = CharacterGender[genderNum];
-
-    if (gender === "male") return "Мужской";
-    if (gender === "female") return "Женский";
-}
-
-const parseEra = (eraNum: number) => {
-    const gender = BirthDayEra[eraNum];
-
-    if (gender === "BBY") return "ДБЯ";
-    if (gender === "ABY") return "ПБЯ";
-}
-
+import {CharacterDeleteModal} from "../../../features/delete-character";
+import {parseEra, parseGender} from "../../../shared";
 
 type Props = {
     character: Character

@@ -4,3 +4,4 @@ export type { CharacterWithPagination } from "./model/character-with-pagination.
 export type { GetCharactersRequest } from "./api/get-characters.ts"
 export {useGetCharacters} from "./api/get-characters.ts"
 export {useGetDetailCharacter} from "./api/get-detail-character.ts"
+export {deleteCharacter} from "./api/delete-character.ts"
