@@ -1,5 +1,6 @@
 import {Character} from "../../../entities/character";
 import {Button, Col, Container, Row, Stack} from "react-bootstrap";
+import {useNavigate} from "@tanstack/react-router";
 
 type Props = {
     characters?: Character[],
@@ -7,7 +8,10 @@ type Props = {
 
 export const Characters = ({characters}: Props) => {
     const btnSize = 20;
-    
+
+    const navigate = useNavigate();
+    const handleClick = (routeName: string) => navigate({to: routeName})
+
     return(
         <Container>
             <Row>
@@ -18,10 +22,10 @@ export const Characters = ({characters}: Props) => {
                                 <h5>{c.name}</h5>
                                 <h6>{c.originalName}</h6>
                             </Stack>
-                            <Button variant="link">
+                            <Button variant="link" onClick={() => handleClick(`/characters/${c.id}`)}>
                                 <img width={btnSize} height={btnSize} src="/info-circle-fill.svg" alt="Info"/>
                             </Button>
-                            <Button variant="link">
+                            <Button variant="link" onClick={() => handleClick(`/characters/${c.id}/edit`)}>
                                 <img width={btnSize} height={btnSize} src="/pencil-fill.svg" alt="Edit"/>
                             </Button>
                         </Stack>

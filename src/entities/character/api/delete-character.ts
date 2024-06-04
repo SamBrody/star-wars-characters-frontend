@@ -7,7 +7,7 @@ const deleteCharacter = async(characterId: number) => {
     await axiosClient.delete(`characters/${characterId}`);
 }
 
-export const useDeleteCharacter = (onSuccess: () => void) => {
+export const useDeleteCharacter = (onSuccess: () => void, onError: () => void) => {
     const queryClient = useQueryClient();
 
     return useMutation({
@@ -15,6 +15,7 @@ export const useDeleteCharacter = (onSuccess: () => void) => {
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['characters']});
             onSuccess();
-        }
+        },
+        onError: () => onError()
     });
 }

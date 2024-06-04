@@ -1,4 +1,4 @@
-import {Button, Container, Pagination, Row, Spinner} from "react-bootstrap";
+import {Button, Container, Pagination, Placeholder, Row} from "react-bootstrap";
 import {Characters} from "./characters.tsx";
 import {CharacterFilters} from "./character-filters.tsx";
 import {ReactNode, useState} from "react";
@@ -64,7 +64,7 @@ export const CharactersPage = () => {
             </Row>
             <hr/>
             <Row style={{marginTop: 30, marginBottom: 30}}>
-                {loadingOrFetching && <Spinner animation="grow" />}
+                {loadingOrFetching && <Placeholder animation="glow" xs={12} size="lg" />}
                 {isSuccess && !(isLoading || isFetching) && <Characters characters={data.items}/>}
                 {isError && <h3>Возникла ошибка! {error.message}</h3>}
                 {isSuccess && data.items && data.items.length === 0 && <h3>Не нашлось ни одного персонажа :(</h3>}
