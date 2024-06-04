@@ -1,1 +1,5 @@
-export type { Character } from "./model/character"
+export type { Character, CharacterGender, BirthDayEra } from "./model/character"
+export type { CharacterWithPagination } from "./model/character-with-pagination.ts"
+export type { GetCharactersRequest } from "./api/get-characters.ts"
+export {useGetCharacters} from "./api/get-characters.ts"
+export {useGetDetailCharacter} from "./api/get-detail-character.ts"

@@ -22,12 +22,12 @@ export type CharacterBirthday = {
     era: BirthDayEra,
 }
 
-enum BirthDayEra {
+export enum BirthDayEra {
     BBY,
     ABY
 }
 
-enum CharacterGender {
+export enum CharacterGender {
     male,
     female
 }
