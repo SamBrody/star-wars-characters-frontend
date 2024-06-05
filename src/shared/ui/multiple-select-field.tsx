@@ -42,6 +42,13 @@ export const MultipleSelectField = <
                             placeholder=""
                             closeMenuOnSelect={false}
                             options={items}
+                            styles={{
+                                control: styles => ({
+                                    ...styles,
+                                    overflowY: "auto",
+                                    maxHeight: 100,
+                                }),
+                            }}
                             value={items.find((x) => x.value === value)}
                             onChange={(val) => onChange(val)}
                         />
