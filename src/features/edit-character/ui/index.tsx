@@ -152,12 +152,14 @@ export const UpdateCharacterForm = () => {
         isUpdateSuccess && navigate({to: '/characters'});
     }, [isUpdateSuccess]);
 
-    const title = `Редактировать персонажа ${methods.getValues('name')}`
+    const title = `Редактировать персонажа ${methods.getValues('name')}`;
+
+    const isLoadingOrFetching = (isFetching || isLoading);
 
     return(
         <FormProvider {...methods}>
-            {(isFetching || isLoading) && <Spinner animation="border"/>}
-            {isSuccess && <CharacterCard
+            {isLoadingOrFetching && <Spinner animation="border"/>}
+            {!isLoadingOrFetching && isSuccess && <CharacterCard
                 title={title}
                 actionBtnText="Удалить"
                 onSubmit={methods.handleSubmit(onSubmit)}

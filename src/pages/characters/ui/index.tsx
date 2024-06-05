@@ -115,7 +115,7 @@ export const CharactersPage = () => {
                 {loadingOrFetching &&  <Spinner animation="border"/>}
                 {isSuccess && !(isLoading || isFetching) && <Characters characters={data.items}/>}
                 {isError && <h3>Возникла ошибка! {error.message}</h3>}
-                {isSuccess && data.items && data.items.length === 0 && <h3>Не нашлось ни одного персонажа :(</h3>}
+                {!loadingOrFetching && isSuccess && data.items && data.items.length === 0 && <h3>Не нашлось ни одного персонажа :(</h3>}
             </Row>
             <Row style={{marginTop: 30}}>
                 <Pagination style={{justifyContent: 'center',}}>

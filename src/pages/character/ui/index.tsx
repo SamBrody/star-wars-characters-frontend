@@ -12,12 +12,15 @@ export const CharacterPage = () => {
         data,
         isSuccess,
         isLoading,
+        isFetching,
     } = useGetDetailCharacter(characterId);
+
+    const isLoadingOrFetching = isLoading || isFetching;
 
     return(
         <>
-            {isLoading &&  <Spinner animation="border"/>}
-            {isSuccess && <CharacterInfoCard character={data}/>}
+            {isLoadingOrFetching &&  <Spinner animation="border"/>}
+            {!isLoadingOrFetching && isSuccess && <CharacterInfoCard character={data}/>}
         </>
     )
 }
