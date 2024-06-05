@@ -1,0 +1,1 @@
+export {UpdateCharacterPage} from "./ui/index.tsx"

@@ -1,13 +1,18 @@
 import {useCreateCharacter} from "../api/use-create-character.ts";
 import {useSnackbar} from "notistack";
-import {BirthDayEra, CharacterGender, CreateCharacter, CreateCharacterErrorKeys} from "../../../entities/character";
+import {
+    BirthDayEra,
+    CharacterBirthday,
+    CharacterGender,
+    CreateCharacter,
+    CreateCharacterErrorKeys
+} from "../../../entities/character";
 import {Button, Col, Form, Row, Stack} from "react-bootstrap";
 import {useNavigate} from "@tanstack/react-router";
 import {DefaultValues, SubmitHandler, useForm} from "react-hook-form";
 import {InputField, MultipleSelectField, SelectField, SelectOptionType, TextAreaField} from "../../../shared";
 import {useGetSpecies} from "../../../entities/species";
 import {useGetPlanets} from "../../../entities/planet";
-import {CharacterBirthday} from "../../../entities/character/model/character.ts";
 import {useEffect} from "react";
 import {useGetMovies} from "../../../entities/movie";
 
