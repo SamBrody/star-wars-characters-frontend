@@ -11,7 +11,7 @@ type Item = {
     label: string,
 }
 
-const parseItems = (items: Item[]) => items.map(x => (<option value={x.id}>{x.label}</option>))
+const parseItems = (items: Item[]) => items.map(x => (<option key={x.id} value={x.id}>{x.label}</option>))
 
 export const CharacterFilters = () => {
     const moviesResponse = useGetMovies();
@@ -32,7 +32,7 @@ export const CharacterFilters = () => {
                     <Stack direction="horizontal" gap={2}>
                         <Form.Label htmlFor="movies">Фильмы</Form.Label>
                         <Form.Select id="movies">
-                            <option>...</option>
+                            <option value="">...</option>
                             {moviesResponse.isSuccess && parseItems(moviesResponse.data.map(x => ({id: x.id, label: x.name})))}
                         </Form.Select>
                     </Stack>
@@ -42,7 +42,7 @@ export const CharacterFilters = () => {
                         <Stack direction="horizontal" gap={2}>
                             <Form.Label style={labelStyle} htmlFor="planets" >Планета</Form.Label>
                             <Form.Select id="planets">
-                                <option>...</option>
+                                <option value="">...</option>
                                 {planetResponse.isSuccess && parseItems(planetResponse.data.map(x => ({id: x.id, label: x.name})))}
                             </Form.Select>
                         </Stack>
@@ -51,7 +51,7 @@ export const CharacterFilters = () => {
                         <Stack direction="horizontal" gap={2}>
                             <Form.Label  style={labelStyle} htmlFor="genders">Пол</Form.Label>
                             <Form.Select id="genders">
-                                <option>...</option>
+                                <option value="">...</option>
                                 <option value={CharacterGender.male}>Мужской</option>
                                 <option value={CharacterGender.female}>Женский</option>
                             </Form.Select>
