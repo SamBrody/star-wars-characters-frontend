@@ -11,5 +11,5 @@ export type CreateCharacter = {
     hairColor: string,
     eyeColor: string,
     description: string,
-    moviesIds: number[],
+    movieIds: number[],
 }
