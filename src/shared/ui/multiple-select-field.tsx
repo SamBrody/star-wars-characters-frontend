@@ -8,6 +8,8 @@ type Props <TField extends FieldValues> = {
     control: Control<TField>,
     items: SelectOptionType[],
     labelValue: string,
+    labelMaxWidth?: string | number,
+    isVertical?: boolean,
     required?: boolean,
 }
 
@@ -19,7 +21,9 @@ export const MultipleSelectField = <
         control,
         items,
         labelValue,
-        required = true
+        labelMaxWidth = '100%',
+        isVertical = false,
+        required = true,
     }: Props<TField>
 ) => {
     return(
@@ -29,7 +33,7 @@ export const MultipleSelectField = <
             rules={{required: required && "Поле обязательное для заполнения"}}
             render={({field: { onChange,  value, ref }, fieldState: { error }}) => (
                 <Form.Group as={Row} className="mb-3" controlId={name}>
-                    <Form.Label>{labelValue}</Form.Label>
+                    <Form.Label column={isVertical} style={{maxWidth: labelMaxWidth}}>{labelValue}</Form.Label>
                     <Col>
                         <Select
                             isMulti

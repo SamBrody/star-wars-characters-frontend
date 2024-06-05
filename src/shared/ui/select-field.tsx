@@ -7,6 +7,7 @@ type Props <TField extends FieldValues> = {
     name: Path<TField>,
     control: Control<TField>,
     items: SelectOptionType[],
+    labelMaxWidth?: string | number,
     labelValue: string,
     required?: boolean,
 }
@@ -19,6 +20,7 @@ export const SelectField = <
         control,
         items,
         labelValue,
+        labelMaxWidth = '100%',
         required = true
     }: Props<TField>
 ) => {
@@ -29,7 +31,7 @@ export const SelectField = <
             rules={{required: required && "Поле обязательное для заполнения"}}
             render={({field: { onChange,  value, ref }, fieldState: { error }}) => (
                 <Form.Group as={Row} className="mb-3" controlId={name}>
-                    <Form.Label column>{labelValue}</Form.Label>
+                    <Form.Label column style={{maxWidth: labelMaxWidth}}>{labelValue}</Form.Label>
                     <Col>
                         <Select
                             ref={ref}
@@ -46,7 +48,6 @@ export const SelectField = <
                         </Form.Text>
                     </Col>
                 </Form.Group>
-
             )}
         />
     )

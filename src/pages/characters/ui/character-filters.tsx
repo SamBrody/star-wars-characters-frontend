@@ -2,60 +2,58 @@ import {Col, Container, Form, Row, Stack} from "react-bootstrap";
 import {CharacterGender} from "../../../entities/character";
 import {useGetMovies} from "../../../entities/movie";
 import {useGetPlanets} from "../../../entities/planet";
-
-const yearInputStyle = {width: '100%'}
-const labelStyle = {minWidth: 70}
-
-type Item = {
-    id: number,
-    label: string,
-}
-
-const parseItems = (items: Item[]) => items.map(x => (<option key={x.id} value={x.id}>{x.label}</option>))
+import {InputField, MultipleSelectField, SelectField, SelectOptionType} from "../../../shared";
+import {useFormContext} from "react-hook-form";
 
 export const CharacterFilters = () => {
+    const {control} = useFormContext();
+
     const moviesResponse = useGetMovies();
     const planetResponse = useGetPlanets();
+
+    const movies = moviesResponse.isSuccess
+        ? moviesResponse.data.map(x => ({value: x.id.toString() , label: x.name}))
+        : [];
+
+    const planets = planetResponse.isSuccess
+        ? planetResponse.data.map(x => ({value: x.id.toString(), label: x.name}))
+        : [];
+
+    const genders: SelectOptionType[] = [
+        {value: CharacterGender.male.toString(), label: "Мужской"},
+        {value: CharacterGender.female.toString(), label: "Женский"},
+    ];
 
     return(
         <Container>
             <Row>
                 <Col>
-                    <Stack direction="horizontal" gap={2} style={{marginBottom: 15}}>
-                        <Form.Label style={{minWidth: 120}}>Дата рождения</Form.Label>
-                        <Form.Label htmlFor="yearFrom">с</Form.Label>
-                        <Form.Control style={yearInputStyle} type="number" id="yearFrom"/>
-                        <Form.Label htmlFor="yearTo">по</Form.Label>
-                        <Form.Control style={yearInputStyle} type="number" id="yearTo"/>
+                    <Stack direction="horizontal" gap={2} style={{ alignItems: 'baseline'}}>
+                        <Form.Label style={{minWidth: 115}}>Дата рождения</Form.Label>
+
+                        <InputField name="yearFrom" control={control} type="number" labelMaxWidth={40} labelValue="с"/>
+
+                        <InputField name="yearTo" control={control} type="number" labelMaxWidth={40} labelValue="по"/>
+
                         <Form.Label>ДБЯ</Form.Label>
                     </Stack>
-                    <Stack direction="horizontal" gap={2}>
-                        <Form.Label htmlFor="movies">Фильмы</Form.Label>
-                        <Form.Select id="movies">
-                            <option value="">...</option>
-                            {moviesResponse.isSuccess && parseItems(moviesResponse.data.map(x => ({id: x.id, label: x.name})))}
-                        </Form.Select>
-                    </Stack>
+                    <Row>
+                        <MultipleSelectField
+                            control={control}
+                            items={movies}
+                            isVertical={true}
+                            labelMaxWidth={100}
+                            name="movies"
+                            labelValue="Фильмы"
+                        />
+                    </Row>
                 </Col>
                 <Col>
-                    <Row style={{marginBottom: 15}}>
-                        <Stack direction="horizontal" gap={2}>
-                            <Form.Label style={labelStyle} htmlFor="planets" >Планета</Form.Label>
-                            <Form.Select id="planets">
-                                <option value="">...</option>
-                                {planetResponse.isSuccess && parseItems(planetResponse.data.map(x => ({id: x.id, label: x.name})))}
-                            </Form.Select>
-                        </Stack>
+                    <Row>
+                        <SelectField control={control} name="planet" items={planets} labelMaxWidth={100} labelValue="Планета"/>
                     </Row>
                     <Row>
-                        <Stack direction="horizontal" gap={2}>
-                            <Form.Label  style={labelStyle} htmlFor="genders">Пол</Form.Label>
-                            <Form.Select id="genders">
-                                <option value="">...</option>
-                                <option value={CharacterGender.male}>Мужской</option>
-                                <option value={CharacterGender.female}>Женский</option>
-                            </Form.Select>
-                        </Stack>
+                        <SelectField control={control} name="gender" items={genders} labelMaxWidth={100} labelValue="Пол"/>
                     </Row>
                 </Col>
             </Row>

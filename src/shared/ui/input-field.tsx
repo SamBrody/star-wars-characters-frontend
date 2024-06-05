@@ -5,6 +5,8 @@ type Props <TField extends FieldValues> = {
     name: Path<TField>,
     control: Control<TField>,
     labelValue: string,
+    labelMaxWidth?: string | number,
+    controlWidth? : string | number,
     required?: boolean,
     type?: string,
 }
@@ -16,6 +18,8 @@ export const InputField = <
         name,
         control,
         labelValue,
+        labelMaxWidth = '100%',
+        controlWidth = '100%',
         required = true,
         type = "input"
     }: Props<TField>
@@ -27,9 +31,9 @@ export const InputField = <
             rules={{required: required && "Поле обязательное для заполнения"}}
             render={({field: { onChange,  value, ref }, fieldState: { error }}) => (
                 <Form.Group as={Row} className="mb-3" controlId={name}>
-                    <Form.Label column>{labelValue}</Form.Label>
+                    <Form.Label column style={{maxWidth: labelMaxWidth}}>{labelValue}</Form.Label>
                     <Col>
-                        <Form.Control onChange={onChange} value={value} ref={ref} type={type}/>
+                        <Form.Control onChange={onChange} value={value} ref={ref} type={type} style={{width: controlWidth}}/>
                         <Form.Text className="text-danger">
                             {error?.message}
                         </Form.Text>

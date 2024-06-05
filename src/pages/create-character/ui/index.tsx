@@ -1,4 +1,4 @@
-import {CreatePostForm} from "../../../features/create-post/ui";
+import {CreatePostForm} from "../../../features/create-post";
 
 export const CreateCharacterPage = () => {
     return(

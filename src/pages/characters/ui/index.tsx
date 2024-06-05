@@ -1,29 +1,39 @@
 import {Button, Container, Pagination, Placeholder, Row} from "react-bootstrap";
 import {Characters} from "./characters.tsx";
 import {CharacterFilters} from "./character-filters.tsx";
-import {ReactNode, useState} from "react";
-import {FormProvider, useForm} from "react-hook-form";
+import {ReactNode, useEffect, useState} from "react";
+import {DefaultValues, FormProvider, useForm} from "react-hook-form";
 import {GetCharactersRequest, useGetCharacters} from "../../../entities/character";
+import {SelectOptionType} from "../../../shared";
 
 const PAGE = 1;
 const PER_PAGE = 4;
 
-type DefaultFilterFormValues = {
-    yearFrom?: number,
-    toFrom?: number,
-    planetId?: number,
-    speciesId?: number,
-    moviesIds?: number[],
+type FormValues = {
+    yearFrom?: number | string,
+    yearTo?: number | string,
+    planet?: SelectOptionType | undefined,
+    gender?: SelectOptionType | undefined,
+    movies?: SelectOptionType[],
+}
+
+const defValues: DefaultValues<FormValues> = {
+    yearFrom: '',
+    yearTo: '',
+    planet: undefined,
+    gender: undefined,
+    movies: [],
 }
 
 export const CharactersPage = () => {
-    const filtersForm = useForm<DefaultFilterFormValues>();
+    const filtersForm = useForm<FormValues>({defaultValues: defValues});
 
-    const [page, setPage] = useState(PAGE);
-    const req: GetCharactersRequest = {
-        page: page,
+    const defaultRequest: GetCharactersRequest = {
+        page: PAGE,
         perPage: PER_PAGE,
     }
+
+    const [request, setRequest] = useState<GetCharactersRequest>(defaultRequest);
 
     const {
         data,
@@ -32,16 +42,54 @@ export const CharactersPage = () => {
         isFetching,
         isLoading,
         isSuccess
-    } = useGetCharacters(req);
+    } = useGetCharacters(request);
 
     const pageInfo = data?.pageInfo;
-    
+
+    /// Наблюдатели за фильтрами
+    const watchYearFrom = filtersForm.watch('yearFrom');
+    const watchYearTo = filtersForm.watch('yearTo');
+    const watchMovies = filtersForm.watch('movies');
+    const watchPlanet = filtersForm.watch('planet');
+    const watchGender = filtersForm.watch('gender');
+
+    useEffect(() => {
+        setRequest(prevState => ({...prevState, bornDateFrom: Number(watchYearFrom!)}))
+    }, [watchYearFrom]);
+
+    useEffect(() => {
+        setRequest(prevState => ({...prevState, bornDateTo: Number(watchYearTo!)}))
+    }, [watchYearTo]);
+
+    useEffect(() => {
+        const ids = watchMovies!.map(x => Number(x.value));
+
+        setRequest(prevState => ({...prevState, moviesIds: ids}))
+    }, [watchMovies]);
+
+    useEffect(() => {
+        const id = watchPlanet ? Number(watchPlanet.value) : undefined;
+
+        setRequest(prevState => ({...prevState, homeWorldId: id}))
+    }, [watchPlanet]);
+
+    useEffect(() => {
+        const id = watchGender ? Number(watchGender.value) : undefined;
+
+        setRequest(prevState => ({...prevState, gender: id}))
+    }, [watchGender]);
+
     const GetPagination = (count: number, currentPage: number) => {
         const items: ReactNode[] = [];
         
         for (let i = 1; i <= count; i++) {
             items.push(
-                <Button variant="outline-secondary" key={i} active={i === currentPage} onClick={()=>setPage(i)}>
+                <Button
+                    variant="outline-secondary"
+                    key={i}
+                    active={i === currentPage}
+                    onClick={() => setRequest(prevState => ({...prevState, page: i}))}
+                >
                     {i}
                 </Button>);
         }
