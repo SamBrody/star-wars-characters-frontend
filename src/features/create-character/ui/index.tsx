@@ -96,8 +96,6 @@ export const CreatePostForm = () => {
     const {mutate, isSuccess} = useCreateCharacter(handleCreateSuccess, handleCreateError);
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
-        console.log("data: ",data)
-
         const birthDay: CharacterBirthday = {
             year: data.birthDay as number,
             era: data.birthEra?.value ? Number(data.birthEra.value) : BirthDayEra.BBY,
@@ -116,8 +114,6 @@ export const CreatePostForm = () => {
             description: data.description,
             movieIds: data.movies.map(x => Number(x.value)),
         }
-
-        console.log("character: ",character)
 
         mutate(character);
     }
