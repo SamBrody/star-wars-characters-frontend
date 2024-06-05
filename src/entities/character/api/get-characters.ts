@@ -27,7 +27,7 @@ const getCharacters = async(
 
     if (homeWorldId) url += `&home_world_id=${homeWorldId}`;
 
-    if (gender) url += `&gender=${gender}`;
+    if (gender !== undefined) url += `&gender=${gender}`;
 
     const response = await axiosClient.get<CharacterWithPagination>(url);
 
