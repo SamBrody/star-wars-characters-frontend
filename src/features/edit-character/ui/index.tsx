@@ -17,6 +17,7 @@ import {DefaultValues, FormProvider, SubmitHandler, useForm} from "react-hook-fo
 import {useUpdateCharacter} from "../api/use-update-character.ts";
 import {useEffect, useState} from "react";
 import {CharacterDeleteModal} from "../../delete-character";
+import {Spinner} from "react-bootstrap";
 
 type FormValues = {
     name: string,
@@ -92,8 +93,8 @@ export const UpdateCharacterForm = () => {
     const {
         data: character,
         isSuccess,
-        // isFetching,
-        // isError
+        isFetching,
+        isLoading
     } = useGetDetailCharacter(characterId);
 
     const handleUpdateSuccess = () => {
@@ -155,12 +156,13 @@ export const UpdateCharacterForm = () => {
 
     return(
         <FormProvider {...methods}>
-            <CharacterCard
+            {(isFetching || isLoading) && <Spinner animation="border"/>}
+            {isSuccess && <CharacterCard
                 title={title}
                 actionBtnText="Удалить"
                 onSubmit={methods.handleSubmit(onSubmit)}
                 onAction={() => setShowModal(true)}
-            />
+            />}
             <CharacterDeleteModal
                 characterId={characterId}
                 show={showModal}

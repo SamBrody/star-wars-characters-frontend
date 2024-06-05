@@ -1,4 +1,4 @@
-import {Placeholder} from "react-bootstrap";
+import {Spinner} from "react-bootstrap";
 import {CharacterInfoCard, useGetDetailCharacter} from "../../../entities/character";
 import {useParams} from "@tanstack/react-router";
 
@@ -16,7 +16,7 @@ export const CharacterPage = () => {
 
     return(
         <>
-            {isLoading && <Placeholder xs={12} size="lg" />}
+            {isLoading &&  <Spinner animation="border"/>}
             {isSuccess && <CharacterInfoCard character={data}/>}
         </>
     )
