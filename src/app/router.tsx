@@ -3,6 +3,7 @@ import {HomePage} from "../pages/home";
 import {CharacterPage} from "../pages/character";
 import {CreateCharacterPage} from "../pages/create-character";
 import {CharactersPage} from "../pages/characters";
+import {UpdateCharacterPage} from "../pages/update-character";
 
 export const routeRoot = new RootRoute();
 
@@ -27,14 +28,20 @@ const createCharacterRoute = new Route({
     component: CreateCharacterPage,
 });
 
+const updateCharacterRoute = new Route({
+    getParentRoute: () => homeRoute,
+    path: '/characters/$characterId/edit',
+    component: UpdateCharacterPage,
+});
+
 const charactersRoute = new Route({
     getParentRoute: () => homeRoute,
     path: '/characters',
     component: CharactersPage,
-})
+});
 
 const routeTree = routeRoot.addChildren([homeRoute,]);
 
-homeRoute.addChildren([characterDetailRoute, createCharacterRoute, charactersRoute])
+homeRoute.addChildren([characterDetailRoute, createCharacterRoute, updateCharacterRoute, charactersRoute])
 
 export const router = new Router({routeTree: routeTree});

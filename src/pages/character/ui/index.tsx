@@ -1,7 +1,6 @@
 import {Placeholder} from "react-bootstrap";
-import {useGetDetailCharacter} from "../../../entities/character";
+import {CharacterInfoCard, useGetDetailCharacter} from "../../../entities/character";
 import {useParams} from "@tanstack/react-router";
-import {CharacterCard} from "../../../entities/character/ui";
 
 export const CharacterPage = () => {
     const characterId = useParams({
@@ -18,7 +17,7 @@ export const CharacterPage = () => {
     return(
         <>
             {isLoading && <Placeholder xs={12} size="lg" />}
-            {isSuccess && <CharacterCard character={data}/>}
+            {isSuccess && <CharacterInfoCard character={data}/>}
         </>
     )
 }

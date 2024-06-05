@@ -39,16 +39,16 @@ export const SelectField = <
                             isClearable
                             placeholder=""
                             closeMenuOnSelect
-                            options={items}
-                            value={items.find((x) => x.value === value)}
+                            value={value as SelectOptionType}
                             onChange={(val) => onChange(val)}
+                            options={items}
                         />
                         <Form.Text className="text-danger">
                             {error?.message}
                         </Form.Text>
                     </Col>
                 </Form.Group>
-            )}
+                )}
         />
     )
 }

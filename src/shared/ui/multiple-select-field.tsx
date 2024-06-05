@@ -41,7 +41,6 @@ export const MultipleSelectField = <
                             name={name}
                             placeholder=""
                             closeMenuOnSelect={false}
-                            options={items}
                             styles={{
                                 control: styles => ({
                                     ...styles,
@@ -49,8 +48,9 @@ export const MultipleSelectField = <
                                     maxHeight: 100,
                                 }),
                             }}
-                            value={items.find((x) => x.value === value)}
+                            value={value as SelectOptionType[]}
                             onChange={(val) => onChange(val)}
+                            options={items}
                         />
                         <Form.Text className="text-danger">
                             {error?.message}

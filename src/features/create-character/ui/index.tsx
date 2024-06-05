@@ -3,23 +3,20 @@ import {useSnackbar} from "notistack";
 import {
     BirthDayEra,
     CharacterBirthday,
+    CharacterCard,
     CharacterGender,
     CreateCharacter,
     CreateCharacterErrorKeys
 } from "../../../entities/character";
-import {Button, Col, Form, Row, Stack} from "react-bootstrap";
 import {useNavigate} from "@tanstack/react-router";
-import {DefaultValues, SubmitHandler, useForm} from "react-hook-form";
-import {InputField, MultipleSelectField, SelectField, SelectOptionType, TextAreaField} from "../../../shared";
-import {useGetSpecies} from "../../../entities/species";
-import {useGetPlanets} from "../../../entities/planet";
+import {DefaultValues, FormProvider, SubmitHandler, useForm} from "react-hook-form";
+import {SelectOptionType} from "../../../shared";
 import {useEffect} from "react";
-import {useGetMovies} from "../../../entities/movie";
 
 type FormValues = {
     name: string,
     originalName: string,
-    birthDay: number | string,
+    birthYear: number | string,
     birthEra: SelectOptionType | undefined,
     planets: SelectOptionType| undefined,
     gender: SelectOptionType| undefined,
@@ -34,7 +31,7 @@ type FormValues = {
 const defValues: DefaultValues<FormValues> = {
     name: '',
     originalName: '',
-    birthDay: '',
+    birthYear: '',
     birthEra: undefined,
     planets: undefined,
     gender: undefined,
@@ -48,34 +45,10 @@ const defValues: DefaultValues<FormValues> = {
 
 export const CreatePostForm = () => {
     const snackbar = useSnackbar();
+
     const navigate = useNavigate();
 
-    const speciesResponse = useGetSpecies();
-    const planetResponse = useGetPlanets();
-    const moviesResponse = useGetMovies();
-
-    const species = speciesResponse.isSuccess
-        ? speciesResponse.data.map(x => ({value: x.id.toString(), label: x.name}))
-        : [];
-
-    const planets = planetResponse.isSuccess
-        ? planetResponse.data.map(x => ({value: x.id.toString(), label: x.name}))
-        : [];
-
-    const movies = moviesResponse.isSuccess
-        ? moviesResponse.data.map(x => ({value: x.id.toString() , label: x.name}))
-        : [];
-
-    const genders: SelectOptionType[] = [
-        {value: CharacterGender.male.toString(), label: "Мужской"},
-        {value: CharacterGender.female.toString(), label: "Женский"},
-    ];
-
-    const {
-        setError,
-        handleSubmit,
-        control,
-    } = useForm<FormValues>({defaultValues: defValues});
+    const methods = useForm<FormValues>({defaultValues: defValues});
 
     const handleCreateSuccess = () => {
         const msg = 'Персонаж был успешно создан';
@@ -97,7 +70,7 @@ export const CreatePostForm = () => {
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
         const birthDay: CharacterBirthday = {
-            year: data.birthDay as number,
+            year: data.birthYear as number,
             era: data.birthEra?.value ? Number(data.birthEra.value) : BirthDayEra.BBY,
         }
 
@@ -123,44 +96,13 @@ export const CreatePostForm = () => {
     }, [isSuccess]);
 
     return(
-        <Form onSubmit={handleSubmit(onSubmit)}>
-            <h2>Добавление персонажа</h2>
-            <Row style={{marginTop: 30}}>
-                <Col>
-                    <InputField control={control} name="name" labelValue="Имя персонажа"/>
-
-                    <InputField control={control} name="originalName" labelValue="Имя (в оригинале)"/>
-
-                    <InputField control={control} name="birthDay" labelValue="Дата рождения" type="number"/>
-
-                    <SelectField control={control} name="planets" items={planets} labelValue="Планета"/>
-
-                    <SelectField control={control} name="gender" items={genders} labelValue="Пол"/>
-
-                    <SelectField control={control} name="species" items={species} labelValue="Раса"/>
-
-                    <InputField control={control} name="height" type="number" labelValue="Рост (см)" />
-
-                    <InputField control={control} name="hairColor" labelValue="Цвет волос"/>
-
-                    <InputField control={control} name="eyeColor" labelValue="Цвет глаз"/>
-                </Col>
-                <Col>
-                    <TextAreaField control={control} name="description" labelValue="Описание"/>
-
-                    <MultipleSelectField control={control} items={movies} name="movies" labelValue="Фильмы"/>
-                </Col>
-            </Row>
-            <Row>
-                <Stack direction="horizontal" style={{justifyContent: 'right'}} gap={2}>
-                    <Button variant="secondary" onClick={() => navigate({to: '/characters'})}>
-                        Отменить
-                    </Button>
-                    <Button variant="secondary" type="submit">
-                        Сохранить
-                    </Button>
-                </Stack>
-            </Row>
-        </Form>
+        <FormProvider {...methods}>
+            <CharacterCard
+                title="Добавление персонажа"
+                actionBtnText="Отменить"
+                onSubmit={methods.handleSubmit(onSubmit)}
+                onAction={() => navigate({to: '/characters'})}
+            />
+        </FormProvider>
     )
 }

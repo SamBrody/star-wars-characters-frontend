@@ -1,96 +1,84 @@
-import {Character} from "../model/character.ts";
-import {Button, Col, Container, Row, Stack} from "react-bootstrap";
-import {useNavigate} from "@tanstack/react-router";
-import {useState} from "react";
-import {CharacterDeleteModal} from "../../../features/delete-character";
-import {parseEra, parseGender} from "../../../shared";
+﻿import {Button, Col, Form, Row, Stack} from "react-bootstrap";
+import {InputField, MultipleSelectField, SelectField, TextAreaField} from "../../../shared";
+import {useFormContext} from "react-hook-form";
+import {ReactNode} from "react";
+import {useGetSpecies} from "../../species";
+import {useGetPlanets} from "../../planet";
+import {useGetMovies} from "../../movie";
+import {genderOptions} from "../model/character.ts";
 
 type Props = {
-    character: Character
+    title?: ReactNode,
+    actionBtnText?: ReactNode,
+    onSubmit: () => void,
+    onAction: () => void,
 }
 
-export const CharacterCard = ({character}: Props) => {
-    const propertyStyle = {width: 120, maxWidth: 120};
-    const propValueStyle = {fontSize: 16};
+export const CharacterCard = (
+    {
+        title = "",
+        actionBtnText = "",
+        onSubmit,
+        onAction
+    }: Props
+) => {
+    const {control} = useFormContext();
 
-    const navigate = useNavigate();
-    const handleClick = (routeName: string) => navigate({to: routeName});
+    const speciesResponse = useGetSpecies();
+    const planetResponse = useGetPlanets();
+    const moviesResponse = useGetMovies();
 
-    const [showModal, setShowModal] = useState(false);
-    
-    return (
-        <Container>
-            <Row style={{marginBottom: 15}}>
+    const species = speciesResponse.isSuccess
+        ? speciesResponse.data.map(x => ({value: x.id.toString(), label: x.name}))
+        : [];
+
+    const planets = planetResponse.isSuccess
+        ? planetResponse.data.map(x => ({value: x.id.toString(), label: x.name}))
+        : [];
+
+    const movies = moviesResponse.isSuccess
+        ? moviesResponse.data.map(x => ({value: x.id.toString() , label: x.name}))
+        : [];
+
+    return(
+        <Form onSubmit={onSubmit}>
+            <h2>{title}</h2>
+            <Row style={{marginTop: 30}}>
                 <Col>
-                    <Row style={{marginBottom: 30}}>
-                      <h2>{`${character.name} (${character.originalName})`}</h2>
-                  </Row>
-                    <Row style={{marginBottom: 30}}>
-                        <Col>
-                            <Stack direction="horizontal" style={{alignItems: "baseline"}} gap={3}>
-                                <h6 style={propertyStyle}>Дата рождения</h6>
-                                <p style={propValueStyle}>{character.birthDay.year} {parseEra(character.birthDay.era)}</p>
-                            </Stack>
+                    <InputField control={control} name="name" labelValue="Имя персонажа"/>
 
-                            <Stack direction="horizontal" style={{alignItems: "baseline"}} gap={3}>
-                                <h6 style={propertyStyle}>Планета</h6>
-                                <p style={propValueStyle}>{character.homeWorld.name}</p>
-                            </Stack>
+                    <InputField control={control} name="originalName" labelValue="Имя (в оригинале)"/>
 
-                            <Stack direction="horizontal" style={{alignItems: "baseline"}} gap={3}>
-                                <h6 style={propertyStyle}>Пол</h6>
-                                <p style={propValueStyle}>{parseGender(character.gender)}</p>
-                            </Stack>
-                            
-                            <Stack direction="horizontal" style={{alignItems: "baseline"}} gap={3}>
-                                <h6 style={propertyStyle}>Раса</h6>
-                                <p style={propValueStyle}>{character.species.name}</p>
-                            </Stack>
-                        </Col>
-                        <Col>
-                            <Stack direction="horizontal" style={{alignItems: "baseline"}} gap={3}>
-                                <h6 style={propertyStyle}>Рост</h6>
-                                <p style={propValueStyle}>{character.height / 100} м</p>
-                            </Stack>
-                            <Stack direction="horizontal"  style={{alignItems: "baseline"}} gap={3}>
-                                <h6 style={propertyStyle}>Цвет волос</h6>
-                                <p style={propValueStyle}>{character.hairColor}</p>
-                            </Stack>
-                            <Stack direction="horizontal" style={{alignItems: "baseline"}} gap={3}>
-                                <h6 style={propertyStyle}>Цвет глаз</h6>
-                                <p style={propValueStyle}>{character.eyeColor}</p>
-                            </Stack>
-                        </Col>
-                    </Row>
+                    <InputField control={control} name="birthYear" labelValue="Дата рождения" type="number"/>
+
+                    <SelectField control={control} name="planets" items={planets} labelValue="Планета"/>
+
+                    <SelectField control={control} name="gender" items={genderOptions} labelValue="Пол"/>
+
+                    <SelectField control={control} name="species" items={species} labelValue="Раса"/>
+
+                    <InputField control={control} name="height" type="number" labelValue="Рост (см)" />
+
+                    <InputField control={control} name="hairColor" labelValue="Цвет волос"/>
+
+                    <InputField control={control} name="eyeColor" labelValue="Цвет глаз"/>
                 </Col>
                 <Col>
-                    <h3>Фильмы:</h3>
-                    {character.movies.map(x => (
-                        <Stack key={x.id}>
-                             - {x.name}
-                        </Stack>
-                    ))}
+                    <TextAreaField control={control} name="description" labelValue="Описание"/>
+
+                    <MultipleSelectField control={control} items={movies} name="movies" labelValue="Фильмы"/>
                 </Col>
-            </Row>
-            <Row style={{marginBottom: 15}}>
-                <p style={{fontSize: 24}}>{character.description}</p>
             </Row>
             <Row>
                 <Stack direction="horizontal" style={{justifyContent: 'right'}} gap={2}>
-                    <Button variant="secondary" onClick={() => setShowModal(true)}>
-                        Удалить
+                    <Button variant="secondary" onClick={onAction}>
+                        {actionBtnText}
                     </Button>
-                    <Button variant="secondary" onClick={() => handleClick(`/characters/${character.id}/edit`)}>
-                        Редактировать
+                    <Button variant="secondary" type="submit">
+                        Сохранить
                     </Button>
                 </Stack>
             </Row>
-            <CharacterDeleteModal
-                characterId={character.id}
-                show={showModal}
-                handleSubmit={() => navigate({to: '/characters'})}
-                handleClose={() => setShowModal(false)}
-            />
-        </Container>
+        </Form>
     )
 }
