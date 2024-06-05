@@ -10,16 +10,16 @@ const PAGE = 1;
 const PER_PAGE = 4;
 
 type FormValues = {
-    yearFrom?: number | string,
-    yearTo?: number | string,
+    yearLowerBound?: number | string,
+    yearUpperBound?: number | string,
     planet?: SelectOptionType | undefined,
     gender?: SelectOptionType | undefined,
     movies?: SelectOptionType[],
 }
 
 const defValues: DefaultValues<FormValues> = {
-    yearFrom: '',
-    yearTo: '',
+    yearLowerBound: '',
+    yearUpperBound: '',
     planet: undefined,
     gender: undefined,
     movies: [],
@@ -47,19 +47,19 @@ export const CharactersPage = () => {
     const pageInfo = data?.pageInfo;
 
     /// Наблюдатели за фильтрами
-    const watchYearFrom = filtersForm.watch('yearFrom');
-    const watchYearTo = filtersForm.watch('yearTo');
+    const watchYearLowerBound = filtersForm.watch('yearLowerBound');
+    const watchYearUpperBound = filtersForm.watch('yearUpperBound');
     const watchMovies = filtersForm.watch('movies');
     const watchPlanet = filtersForm.watch('planet');
     const watchGender = filtersForm.watch('gender');
 
     useEffect(() => {
-        setRequest(prevState => ({...prevState, bornDateFrom: Number(watchYearFrom!)}))
-    }, [watchYearFrom]);
+        setRequest(prevState => ({...prevState, yearLowerBound: Number(watchYearLowerBound!)}))
+    }, [watchYearLowerBound]);
 
     useEffect(() => {
-        setRequest(prevState => ({...prevState, bornDateTo: Number(watchYearTo!)}))
-    }, [watchYearTo]);
+        setRequest(prevState => ({...prevState, yearUpperBound: Number(watchYearUpperBound!)}))
+    }, [watchYearUpperBound]);
 
     useEffect(() => {
         const ids = watchMovies!.map(x => Number(x.value));

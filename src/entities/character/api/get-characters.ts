@@ -5,21 +5,21 @@ import {axiosClient} from "../../../shared";
 export type GetCharactersRequest = {
     page: number,
     perPage: number,
-    bornDateFrom?: number,
-    bornDateTo?: number,
+    yearLowerBound?: number,
+    yearUpperBound?: number,
     moviesIds?: number[],
     homeWorldId?: number,
     gender?: number,
 }
 
 const getCharacters = async(
-    {page, perPage, bornDateFrom, bornDateTo, moviesIds, homeWorldId, gender}: GetCharactersRequest
+    {page, perPage, yearLowerBound, yearUpperBound, moviesIds, homeWorldId, gender}: GetCharactersRequest
 ): Promise<CharacterWithPagination> => {
     let url = `characters?page=${page}&per_page=${perPage}`;
 
-    if (bornDateFrom) url += `&born_year_from=${bornDateFrom}`;
+    if (yearLowerBound) url += `&year_lower_bound=${yearLowerBound}`;
 
-    if (bornDateTo) url += `&born_year_to=${bornDateTo}`;
+    if (yearUpperBound) url += `&year_upper_bound=${yearUpperBound}`;
 
     if (moviesIds) moviesIds.forEach(function (value) {
         url += `&movie_id=${value}`

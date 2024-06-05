@@ -31,9 +31,9 @@ export const CharacterFilters = () => {
                     <Stack direction="horizontal" gap={2} style={{ alignItems: 'baseline'}}>
                         <Form.Label style={{minWidth: 115}}>Дата рождения</Form.Label>
 
-                        <InputField name="yearFrom" control={control} type="number" labelMaxWidth={40} labelValue="с"/>
+                        <InputField name="yearLowerBound" control={control} type="number" labelMaxWidth={40} labelValue="с"/>
 
-                        <InputField name="yearTo" control={control} type="number" labelMaxWidth={40} labelValue="по"/>
+                        <InputField name="yearUpperBound" control={control} type="number" labelMaxWidth={40} labelValue="по"/>
 
                         <Form.Label>ДБЯ</Form.Label>
                     </Stack>
