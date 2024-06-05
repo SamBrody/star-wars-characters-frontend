@@ -1,6 +1,7 @@
 import {Movie} from "../../movie";
 import {Planet} from "../../planet";
 import {Species} from "../../species";
+import {SelectOptionType} from "../../../shared";
 
 export type Character = {
     id: number,
@@ -27,7 +28,17 @@ export enum BirthDayEra {
     ABY
 }
 
+export const eraOptions: SelectOptionType[] = [
+    {value: BirthDayEra.BBY.toString(), label: "ПБЯ"},
+    {value: BirthDayEra.ABY.toString(), label: "АБЯ"},
+];
+
 export enum CharacterGender {
     male,
     female
 }
+
+export const genderOptions: SelectOptionType[] = [
+    {value: CharacterGender.male.toString(), label: "Мужской"},
+    {value: CharacterGender.female.toString(), label: "Женский"},
+];
