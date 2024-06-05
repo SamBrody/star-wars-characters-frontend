@@ -66,7 +66,7 @@ export const CharacterCard = (
                 <Col>
                     <TextAreaField control={control} name="description" labelValue="Описание"/>
 
-                    <MultipleSelectField control={control} items={movies} name="movies" labelValue="Фильмы"/>
+                    <MultipleSelectField control={control} items={movies} maxHeight={256} name="movies" labelValue="Фильмы"/>
                 </Col>
             </Row>
             <Row>
