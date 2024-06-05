@@ -8,6 +8,7 @@ type Props <TField extends FieldValues> = {
     control: Control<TField>,
     items: SelectOptionType[],
     labelValue: string,
+    maxHeight?: string | number,
     labelMaxWidth?: string | number,
     isVertical?: boolean,
     required?: boolean,
@@ -21,6 +22,7 @@ export const MultipleSelectField = <
         control,
         items,
         labelValue,
+        maxHeight = 100,
         labelMaxWidth = '100%',
         isVertical = false,
         required = true,
@@ -45,7 +47,7 @@ export const MultipleSelectField = <
                                 control: styles => ({
                                     ...styles,
                                     overflowY: "auto",
-                                    maxHeight: 100,
+                                    maxHeight: maxHeight,
                                 }),
                             }}
                             value={value as SelectOptionType[]}
