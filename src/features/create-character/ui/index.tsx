@@ -138,7 +138,7 @@ export const CreatePostForm = () => {
 
                     <SelectField control={control} name="species" items={species} labelValue="Раса"/>
 
-                    <InputField control={control} name="height" type="number" labelValue="Рост" />
+                    <InputField control={control} name="height" type="number" labelValue="Рост (см)" />
 
                     <InputField control={control} name="hairColor" labelValue="Цвет волос"/>
 
