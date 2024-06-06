@@ -107,9 +107,16 @@ export const UpdateCharacterForm = () => {
         snackbar.enqueueSnackbar(`${msg}`, {variant: 'error'});
 
         Object.keys(error).forEach(key => {
+            if (key === "birthDay.Year") {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                methods.setError("birthYear", {message: error[key][0]});
+                return;
+            }
+
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            setError(key, { message: error[key][0]});
+            methods.setError(key, { message: error[key][0]});
         })
     }
 
