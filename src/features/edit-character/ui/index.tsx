@@ -115,7 +115,7 @@ export const UpdateCharacterForm = () => {
 
     const {
         mutate,
-        isSuccess: isUpdateSuccess
+        isPending,
     } = useUpdateCharacter(handleUpdateSuccess, handleUpdateError);
 
     const methods = useForm<FormValues>({defaultValues: defValues});
@@ -148,10 +148,6 @@ export const UpdateCharacterForm = () => {
         mutate(character);
     }
 
-    useEffect(() => {
-        isUpdateSuccess && navigate({to: '/characters'});
-    }, [isUpdateSuccess]);
-
     const title = `Редактировать персонажа ${methods.getValues('name')}`;
 
     const isLoadingOrFetching = (isFetching || isLoading);
@@ -159,6 +155,7 @@ export const UpdateCharacterForm = () => {
     return(
         <FormProvider {...methods}>
             {isLoadingOrFetching && <Spinner animation="border"/>}
+            {isPending && <Spinner animation="border"/>}
             {!isLoadingOrFetching && isSuccess && <CharacterCard
                 title={title}
                 actionBtnText="Удалить"
