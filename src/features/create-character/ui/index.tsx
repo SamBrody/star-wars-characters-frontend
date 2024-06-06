@@ -43,7 +43,7 @@ const defValues: DefaultValues<FormValues> = {
     movies: [],
 }
 
-export const CreatePostForm = () => {
+export const CreateCharacterForm = () => {
     const snackbar = useSnackbar();
 
     const navigate = useNavigate();
