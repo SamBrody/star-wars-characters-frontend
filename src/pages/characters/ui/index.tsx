@@ -98,6 +98,8 @@ export const CharactersPage = () => {
     }
     
     const loadingOrFetching = isLoading || isFetching;
+
+    const noCharactersMsg = <h3>Не нашлось ни одного персонажа :( Но вы можете добавить нового!</h3>
     
     return(
         <Container fluid>
@@ -115,7 +117,7 @@ export const CharactersPage = () => {
                 {loadingOrFetching &&  <Spinner animation="border"/>}
                 {isSuccess && !(isLoading || isFetching) && <Characters characters={data.items}/>}
                 {isError && <h3>Возникла ошибка! {error.message}</h3>}
-                {!loadingOrFetching && isSuccess && data.items && data.items.length === 0 && <h3>Не нашлось ни одного персонажа :(</h3>}
+                {!loadingOrFetching && isSuccess && data.items && data.items.length === 0 && noCharactersMsg}
             </Row>
             <Row style={{marginTop: 30}}>
                 <Pagination style={{justifyContent: 'center',}}>
