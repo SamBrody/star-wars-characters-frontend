@@ -1,6 +1,6 @@
 import {axiosClient, IValidationError} from "../../../shared";
 import axios from "axios";
-import {UpdateCharacter} from "../rdo/update-character.ts";
+import {UpdateCharacter} from "../dto/update-character.ts";
 
 export type UpdateCharacterErrorKeys =
     'name' | 'originalName' | 'birthDay' | 'planetId' | 'gender' | 'speciesId' |

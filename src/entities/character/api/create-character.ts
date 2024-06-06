@@ -1,5 +1,5 @@
 import {axiosClient, IValidationError} from "../../../shared";
-import {CreateCharacter} from "../rdo/create-character.ts";
+import {CreateCharacter} from "../dto/create-character.ts";
 import axios from "axios";
 
 export type CreateCharacterErrorKeys =
