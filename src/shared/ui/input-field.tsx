@@ -33,7 +33,7 @@ export const InputField = <
                 <Form.Group as={Row} className="mb-3" controlId={name}>
                     <Form.Label column style={{maxWidth: labelMaxWidth}}>{labelValue}</Form.Label>
                     <Col>
-                        <Form.Control onChange={onChange} value={value} ref={ref} type={type} style={{width: controlWidth}}/>
+                        <Form.Control onChange={onChange} value={value} ref={ref} type={type} min={0} style={{width: controlWidth}}/>
                         <Form.Text className="text-danger">
                             {error?.message}
                         </Form.Text>
