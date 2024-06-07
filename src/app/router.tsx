@@ -6,6 +6,7 @@ import {CharactersPage} from "../pages/characters";
 import {UpdateCharacterPage} from "../pages/update-character";
 import {SignInPage} from "../pages/sign-in";
 import {SignUpPage} from "../pages/sign-up";
+import {jwtDecode} from "jwt-decode";
 
 export const routeRoot = new RootRoute();
 
@@ -23,9 +24,16 @@ const signUpRoute = new Route({
 
 const homeRoute = new Route({
     beforeLoad: async () => {
-        throw redirect({to: '/sign-in', from: '/'});
+        const token = localStorage.getItem("token");
 
-        // if (router.state.location.pathname === '/') redirect({to: '/characters'})
+        if (!token) throw redirect({to: '/sign-in'});
+
+        const decode = jwtDecode(token);
+        const isExpired = Date.now() >= decode.exp! * 1000;
+
+        if (isExpired) throw redirect({to: '/sign-in'});
+
+        if (router.state.location.pathname === '/') throw redirect({to: '/characters'});
     },
     getParentRoute: () => routeRoot,
     path: '/',

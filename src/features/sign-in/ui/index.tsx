@@ -2,7 +2,7 @@ import {Button, Container, Form, Row, Stack} from "react-bootstrap";
 import {InputField} from "../../../shared";
 import {DefaultValues, SubmitHandler, useForm} from "react-hook-form";
 import {useSignIn} from "../api/use-sign-in.ts";
-import {SignIn, SignInErrorKeys} from "../../../entities/access";
+import {SignIn, SignInErrorKeys, UserSession} from "../../../entities/access";
 import {useSnackbar} from "notistack";
 import {useNavigate} from "@tanstack/react-router";
 
@@ -23,7 +23,9 @@ export const SignInForm = () => {
 
     const {handleSubmit, control, setError} = useForm<FormValues>({defaultValues: defValues});
 
-    const handleSignInSuccess = () => {
+    const handleSignInSuccess = (userSession: UserSession) => {
+        localStorage.setItem("token", userSession.token);
+
         navigate({to: '/characters'});
     }
 
