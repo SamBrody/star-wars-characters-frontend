@@ -127,7 +127,7 @@ export const UpdateCharacterForm = () => {
     const {
         mutate,
         isPending,
-    } = useUpdateCharacter(handleUpdateSuccess, handleUpdateError);
+    } = useUpdateCharacter(characterId, handleUpdateSuccess, handleUpdateError);
 
     const methods = useForm<FormValues>({defaultValues: defValues});
 
