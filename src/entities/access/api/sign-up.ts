@@ -1,4 +1,4 @@
-﻿import {SignUp} from "../dto/signUp.ts";
+﻿import {SignUp} from "../dto/sign-up.ts";
 import {axiosClient, IValidationError} from "../../../shared";
 import axios from "axios";
 

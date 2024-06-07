@@ -1,7 +1,7 @@
 ﻿export type {SignInErrorKeys} from "./api/sign-in.ts"
 export type {SignUpErrorKeys} from "./api/sign-up.ts"
 export type {UserSession} from "./model/user-session.ts"
-export type {SignUp} from "./dto/signUp.ts"
+export type {SignUp} from "./dto/sign-up.ts"
 export type {SignIn} from "./dto/sign-in.ts"
 export {signUp} from "./api/sign-up.ts"
 export {signIn} from "./api/sign-in.ts"
