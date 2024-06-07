@@ -1,4 +1,4 @@
-﻿export type PostLogin = {
+﻿export type SignUp = {
     login: string;
     password: string;
 }

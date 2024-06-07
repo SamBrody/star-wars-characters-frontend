@@ -4,12 +4,28 @@ import {CharacterPage} from "../pages/character";
 import {CreateCharacterPage} from "../pages/create-character";
 import {CharactersPage} from "../pages/characters";
 import {UpdateCharacterPage} from "../pages/update-character";
+import {SignInPage} from "../pages/sign-in";
+import {SignUpPage} from "../pages/sign-up";
 
 export const routeRoot = new RootRoute();
 
+const signInRoute = new Route({
+    getParentRoute: () => routeRoot,
+    path: '/sign-in',
+    component: SignInPage,
+});
+
+const signUpRoute = new Route({
+    getParentRoute: () => routeRoot,
+    path: '/sign-up',
+    component: SignUpPage,
+});
+
 const homeRoute = new Route({
     beforeLoad: async () => {
-        redirect({to: '/characters'})
+        throw redirect({to: '/sign-in', from: '/'});
+
+        // if (router.state.location.pathname === '/') redirect({to: '/characters'})
     },
     getParentRoute: () => routeRoot,
     path: '/',
@@ -40,8 +56,8 @@ const charactersRoute = new Route({
     component: CharactersPage,
 });
 
-const routeTree = routeRoot.addChildren([homeRoute,]);
+const routeTree = routeRoot.addChildren([homeRoute, signInRoute, signUpRoute]);
 
-homeRoute.addChildren([characterDetailRoute, createCharacterRoute, updateCharacterRoute, charactersRoute])
+homeRoute.addChildren([characterDetailRoute, createCharacterRoute, updateCharacterRoute, charactersRoute]);
 
 export const router = new Router({routeTree: routeTree});

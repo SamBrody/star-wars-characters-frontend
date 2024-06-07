@@ -1,4 +1,4 @@
-﻿export type RegisterUser = {
+﻿export type SignIn = {
     login: string;
     password: string;
 }
