@@ -25,6 +25,7 @@ export const SignInForm = () => {
 
     const handleSignInSuccess = (userSession: UserSession) => {
         localStorage.setItem("token", userSession.token);
+        localStorage.setItem("login", userSession.login);
 
         navigate({to: '/characters'});
     }

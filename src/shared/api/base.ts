@@ -10,7 +10,16 @@ class AxiosClientApi {
             headers: {
                 'Accept-Language': 'ru-RU,ru;',
             },
-        })
+        });
+
+        this.session.interceptors.request.use((config) => {
+            const authToken = localStorage.getItem("token");
+
+            const auth = authToken ? `Bearer ${authToken}` : null;
+
+            config.headers.set('Authorization', auth)
+            return config;
+        });
     }
 
     public async get<TResponse>(

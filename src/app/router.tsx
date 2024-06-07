@@ -6,61 +6,58 @@ import {CharactersPage} from "../pages/characters";
 import {UpdateCharacterPage} from "../pages/update-character";
 import {SignInPage} from "../pages/sign-in";
 import {SignUpPage} from "../pages/sign-up";
-import {jwtDecode} from "jwt-decode";
+import {isAuthorized} from "../shared";
 
 export const routeRoot = new RootRoute();
 
 const signInRoute = new Route({
     getParentRoute: () => routeRoot,
-    path: '/sign-in',
+    path: "/sign-in",
     component: SignInPage,
 });
 
 const signUpRoute = new Route({
     getParentRoute: () => routeRoot,
-    path: '/sign-up',
+    path: "/sign-up",
     component: SignUpPage,
 });
 
 const homeRoute = new Route({
     beforeLoad: async () => {
-        const token = localStorage.getItem("token");
-
-        if (!token) throw redirect({to: '/sign-in'});
-
-        const decode = jwtDecode(token);
-        const isExpired = Date.now() >= decode.exp! * 1000;
-
-        if (isExpired) throw redirect({to: '/sign-in'});
-
-        if (router.state.location.pathname === '/') throw redirect({to: '/characters'});
+        if (router.state.location.pathname === "/") throw redirect({to: "/characters"});
     },
     getParentRoute: () => routeRoot,
-    path: '/',
+    path: "/",
     component: HomePage,
 });
 
 const characterDetailRoute = new Route({
     getParentRoute: () => homeRoute,
-    path: '/characters/$characterId',
+    path: "/characters/$characterId",
     component: CharacterPage,
 });
 
 const createCharacterRoute = new Route({
+    beforeLoad: async () => {
+        if (isAuthorized() === false) throw redirect({to: "/characters"});
+    },
     getParentRoute: () => homeRoute,
-    path: '/characters/new',
+    path: "/characters/new",
     component: CreateCharacterPage,
 });
 
 const updateCharacterRoute = new Route({
+    beforeLoad: async () => {
+        if (isAuthorized() === false) throw redirect({to: "/characters"});
+    },
     getParentRoute: () => homeRoute,
-    path: '/characters/$characterId/edit',
+    path: "/characters/$characterId/edit",
     component: UpdateCharacterPage,
 });
 
 const charactersRoute = new Route({
     getParentRoute: () => homeRoute,
-    path: '/characters',
+    path: "/characters",
     component: CharactersPage,
 });
 
