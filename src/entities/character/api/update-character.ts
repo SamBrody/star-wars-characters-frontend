@@ -4,7 +4,7 @@ import {UpdateCharacter} from "../dto/update-character.ts";
 
 export type UpdateCharacterErrorKeys =
     'name' | 'originalName' | 'birthDay' | 'planetId' | 'gender' | 'speciesId' |
-    'height' | 'hairColor' | 'eyeColor' | 'description' | 'moviesIds'
+    'height' | 'hairColor' | 'eyeColor' | 'description' | 'moviesIds' | 'generalErrors'
 
 export const updateCharacter = async(updCharacter: UpdateCharacter) => {
     try {

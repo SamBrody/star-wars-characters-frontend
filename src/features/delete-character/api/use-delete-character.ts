@@ -1,7 +1,7 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {deleteCharacter} from "../../../entities/character";
+import {deleteCharacter, DeleteCharacterErrorKeys} from "../../../entities/character";
 
-export const useDeleteCharacter = (onSuccess: () => void, onError: () => void) => {
+export const useDeleteCharacter = (onSuccess: () => void, onError: (error: Record<DeleteCharacterErrorKeys, string[]>) => void) => {
     const queryClient = useQueryClient();
 
     return useMutation({
@@ -10,6 +10,6 @@ export const useDeleteCharacter = (onSuccess: () => void, onError: () => void) =
             queryClient.invalidateQueries({queryKey: ['characters']});
             onSuccess();
         },
-        onError: () => onError()
+        onError: onError,
     });
 }

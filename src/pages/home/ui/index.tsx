@@ -9,6 +9,7 @@ export const HomePage = () => {
         const login = localStorage.getItem("login");
 
         const logoutHandle = () => {
+            localStorage.removeItem("userId");
             localStorage.removeItem("token");
             localStorage.removeItem("login");
 

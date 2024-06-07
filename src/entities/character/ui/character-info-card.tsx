@@ -3,7 +3,7 @@ import {Button, Col, Container, Row, Stack} from "react-bootstrap";
 import {useNavigate} from "@tanstack/react-router";
 import {useState} from "react";
 import {CharacterDeleteModal} from "../../../features/delete-character";
-import {parseEra, parseGender} from "../../../shared";
+import {isAuthorized, parseEra, parseGender} from "../../../shared";
 
 type Props = {
     character: Character
@@ -12,6 +12,9 @@ type Props = {
 export const CharacterInfoCard = ({character}: Props) => {
     const propertyStyle = {width: 120, maxWidth: 120};
     const propValueStyle = {fontSize: 16};
+
+    const userId = localStorage.getItem("userId");
+    const isCreatedByCurrentUser = userId && Number(userId) === character.createdBy.id;
 
     const navigate = useNavigate();
     const handleClick = (routeName: string) => navigate({to: routeName});
@@ -75,16 +78,18 @@ export const CharacterInfoCard = ({character}: Props) => {
             <Row style={{marginBottom: 15}}>
                 <p style={{fontSize: 24}}>{character.description}</p>
             </Row>
-            <Row>
-                <Stack direction="horizontal" style={{justifyContent: 'right'}} gap={2}>
-                    <Button variant="secondary" onClick={() => setShowModal(true)}>
-                        Удалить
-                    </Button>
-                    <Button variant="secondary" onClick={() => handleClick(`/characters/${character.id}/edit`)}>
-                        Редактировать
-                    </Button>
-                </Stack>
-            </Row>
+            {
+                isAuthorized() && isCreatedByCurrentUser && <Row>
+                    <Stack direction="horizontal" style={{justifyContent: 'right'}} gap={2}>
+                        <Button variant="secondary" onClick={() => setShowModal(true)}>
+                            Удалить
+                        </Button>
+                        <Button variant="secondary" onClick={() => handleClick(`/characters/${character.id}/edit`)}>
+                            Редактировать
+                        </Button>
+                    </Stack>
+                </Row>
+            }
             <CharacterDeleteModal
                 characterId={character.id}
                 show={showModal}

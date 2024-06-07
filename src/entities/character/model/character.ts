@@ -16,6 +16,12 @@ export type Character = {
     eyeColor: string,
     description: string,
     movies: Movie[],
+    createdBy: User,
+}
+
+export type User = {
+    id: number,
+    login: string,
 }
 
 export type CharacterBirthday = {

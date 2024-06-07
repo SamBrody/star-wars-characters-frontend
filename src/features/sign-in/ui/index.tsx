@@ -24,6 +24,7 @@ export const SignInForm = () => {
     const {handleSubmit, control, setError} = useForm<FormValues>({defaultValues: defValues});
 
     const handleSignInSuccess = (userSession: UserSession) => {
+        localStorage.setItem("userId", userSession.userId);
         localStorage.setItem("token", userSession.token);
         localStorage.setItem("login", userSession.login);
 

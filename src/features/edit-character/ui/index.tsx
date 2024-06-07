@@ -114,6 +114,10 @@ export const UpdateCharacterForm = () => {
                 return;
             }
 
+            if (key === "generalErrors") {
+                snackbar.enqueueSnackbar(`${error[key][0]}`, {variant: 'error'});
+            }
+
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             methods.setError(key, { message: error[key][0]});

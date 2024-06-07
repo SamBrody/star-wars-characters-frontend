@@ -2,6 +2,7 @@ import {Button, Modal} from "react-bootstrap";
 import {useSnackbar} from "notistack";
 import {useEffect} from "react";
 import {useDeleteCharacter} from "../api/use-delete-character.ts";
+import {DeleteCharacterErrorKeys} from "../../../entities/character";
 
 type Props = {
     characterId: number,
@@ -18,15 +19,14 @@ export const CharacterDeleteModal = ({characterId, show, handleSubmit, handleClo
         snackbar.enqueueSnackbar(msg, {variant: 'success'});
     }
 
-    const handleDeleteError = () => {
-        const msg = `${error!.message}`;
+    const handleDeleteError = (error: Record<DeleteCharacterErrorKeys, string[]>) => {
+        const msg = `Произошла ошибка: ${error.generalErrors}`;
         snackbar.enqueueSnackbar(msg, {variant: 'error'});
     }
 
     const {
         mutate,
         isSuccess,
-        error
     } = useDeleteCharacter(handleDeleteSuccess, handleDeleteError);
 
     const onSubmitClick = () => mutate(characterId);
