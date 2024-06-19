@@ -15,13 +15,11 @@ React + TypeScript + Vite + bootstrap, react-hook-forms, tanstack/react-query, t
 По пути ``` src/shared/api/config ``` лежит файл index.ts с константой **API_URL**, значение этой констаны - адрес **star-wars-characters-backend**.
 По умолчанию это значение равно ``` http://127.0.0.1:3105/v1 ```, то есть адрес инстанса, запущенного в docker-container. При необходимости этот адрес нужно поменять на свой.
 
-1. Перейти в каталог:  ```C:\Users\szh\WebstormProjects\star-wars-characters-frontend> ```
+1. Выполнить: ```npm install``` для установки требуемых пакетов
 
-2. Выполнить: ```npm install``` для установки требуемых пакетов
+2. Выполнить: ```npm run dev``` для запуска приложения
 
-3. Выполнить: ```npm run dev``` для запуска приложения
-
-4. Перейти (по умолчанию) по адресу: ```http://localhost:5173/```
+3. Перейти (по умолчанию) по адресу: ```http://localhost:5173/```
 
 Данные для авторизации:
 
